@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Register - Pehnava Tales</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fff8f0; color:#5a3d2b; margin:0; padding:20px; }
+  .container { max-width: 400px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 3px 8px rgba(197,94,53,0.3);}
+  h2 { color:#c55e35; text-align:center; }
+  label { display:block; margin-top: 15px; font-weight: 600;}
+  input { width: 100%; padding: 8px; margin-top: 6px; border-radius: 5px; border:1px solid #c9b6a3; }
+  button { width: 100%; background:#c55e35; color:white; border:none; padding: 10px; margin-top: 20px; cursor: pointer; border-radius: 5px; font-weight: 600;}
+  button:hover { background:#a35224; }
+  .bottom-text { text-align:center; margin-top: 15px; }
+  a { color:#c55e35; text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Create a New Account</h2>
+  <form id="registerForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required placeholder="Your full name" />
+    <label for="email">Email:</label>
+    <input type="email" id="email" required placeholder="you@example.com" />
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" required placeholder="9876543210" />
+    <label for="password">Password:</label>
+    <input type="password" id="password" required placeholder="Enter password" />
+    <button type="submit">Register</button>
+  </form>
+  <div class="bottom-text">
+    Already have an account? <a href="login.html">Login here</a>
+  </div>
+</div>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Registration functionality will be added soon.');
+  });
+</script>
+
+</body>
+</html>

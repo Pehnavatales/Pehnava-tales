@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cart - Pehnava Tales</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+    margin: 0; padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #c55e35;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+  }
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #d3bfa7;
+    text-align: center;
+  }
+  .product-img {
+    width: 80px;
+    border-radius: 8px;
+  }
+  input.qty-input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+  }
+  button.remove-btn {
+    background: #c55e35;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button.remove-btn:hover {
+    background: #a35224;
+  }
+  .summary {
+    max-width: 400px;
+    margin: 30px auto 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+  }
+  .summary p {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    background: #c55e35;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .checkout-btn:hover {
+    background: #a35224;
+  }
+  p.empty-cart {
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 50px;
+    color: #a35224;
+  }
+</style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<table id="cartTable">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Size</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Cart items will load here -->
+  </tbody>
+</table>
+
+<div class="summary" id="summarySection" style="display:none;">
+  <p><span>Subtotal:</span> <span id="subtotalPrice">₹0</span></p>
+  <p><span>Shipping Charges:</span> <span>₹50</span></p>
+  <p><span>Total:</span> <span id="totalPrice">₹0</span></p>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+</div>
+
+<p class="empty-cart" id="emptyMsg" style="display:none;">Your cart is empty.</p>
+
+<script>
+  function loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const tbody = document.querySelector('#cartTable tbody');
+    tbody.innerHTML = '';
+
+    if(cart.length === 0) {
+      document.getElementById('cartTable').style.display = 'none';
+      document.getElementById('summarySection').style.display = 'none';
+      document.getElementById('emptyMsg').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('cartTable').style.display = 'table';
+    document.getElementById('summarySection').style.display = 'block';
+    document.getElementById('emptyMsg').style.display = 'none';
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      subtotal += itemTotal;
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td data-label="Product">
+          <img src="${item.image}" alt="${item.name}" class="product-img" />
+          <br>${item.name}
+        </td>
+        <td data-label="Size">${item.size}</td>
+        <td data-label="Quantity">
+          <input type="number" class="qty-input" min="1" value="${item.quantity}" data-index="${index}" />
+        </td>
+        <td data-label="Price">₹${item.price}</td>
+        <td data-label="Total">₹${itemTotal}</td>
+        <td data-label="Remove"><button class="remove-btn" data-index="${index}">Remove</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    document.getElementById('subtotalPrice').textContent = `₹${subtotal}`;
+    const shippingCharge = 50;
+    document.getElementById('totalPrice').textContent = `₹${subtotal + shippingCharge}`;
+  }
+
+  // Update quantity when changed
+  document.querySelector('#cartTable tbody').addEventListener('input', function(e){
+    if(e.target.classList.contains('qty-input')) {
+      const index = e.target.getAttribute('data-index');
+      let newQty = parseInt(e.target.value);
+      if(newQty < 1) {
+        newQty = 1;
+        e.target.value = 1;
+      }
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].quantity = newQty;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+  });
+
+  // Remove item from cart
+  document.querySelector('#cartTable tbody').addEventListener('click', function(e){
+    if(e.target.classList.contains('remove-btn')) {
+      const index = e.target.getAttribute('data-index');
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+  });
+
+  function checkout() {
+  window.location.href = 'checkout.html';
+}
+
+  // Initial load
+  loadCart();
+</script>
+
+</body>
+</html>

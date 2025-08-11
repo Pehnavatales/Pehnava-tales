@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wishlist - Pehnava Tales</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+    margin: 0; padding: 20px;
+  }
+  header {
+    background: #f8f0e3;
+    padding: 10px 20px;
+    border-bottom: 1px solid #d3bfa7;
+    display: flex; align-items: center;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c55e35;
+    cursor: pointer;
+  }
+  h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #c55e35;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+  }
+  th, td {
+    padding: 12px;
+    border-bottom: 1px solid #d3bfa7;
+    text-align: center;
+  }
+  .product-img {
+    width: 80px;
+    border-radius: 8px;
+  }
+  button {
+    background: #c55e35;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  button:hover {
+    background: #a35224;
+  }
+  p.empty-msg {
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 40px;
+    color: #a35224;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="window.location.href='index.html'">Pehnava Tales</div>
+</header>
+
+<h1>Your Wishlist</h1>
+
+<table id="wishlistTable">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Size</th>
+      <th>Price</th>
+      <th>Add to Cart</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Wishlist items will load here -->
+  </tbody>
+</table>
+
+<p class="empty-msg" id="emptyMsg" style="display:none;">Your wishlist is empty.</p>
+
+<script>
+  function loadWishlist() {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const tbody = document.querySelector('#wishlistTable tbody');
+    tbody.innerHTML = '';
+
+    if (wishlist.length === 0) {
+      document.getElementById('wishlistTable').style.display = 'none';
+      document.getElementById('emptyMsg').style.display = 'block';
+      return;
+    } else {
+      document.getElementById('wishlistTable').style.display = 'table';
+      document.getElementById('emptyMsg').style.display = 'none';
+    }
+
+    wishlist.forEach((item, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>
+          <img src="${item.image}" alt="${item.name}" class="product-img" />
+          <br>${item.name}
+        </td>
+        <td>${item.size}</td>
+        <td>₹${item.price}</td>
+        <td><button class="add-to-cart-btn" data-index="${index}">Add to Cart</button></td>
+        <td><button class="remove-btn" data-index="${index}">Remove</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  // Add to cart button logic
+  document.querySelector('#wishlistTable tbody').addEventListener('click', function(e) {
+    if (e.target.classList.contains('add-to-cart-btn')) {
+      const index = e.target.getAttribute('data-index');
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const itemToAdd = wishlist[index];
+
+      // Check if item already in cart (same id and size)
+      const existingIndex = cart.findIndex(c => c.id === itemToAdd.id && c.size === itemToAdd.size);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += 1; // increase qty
+      } else {
+        cart.push({...itemToAdd, quantity: 1});
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${itemToAdd.name} added to cart!`);
+    }
+  });
+
+  // Remove from wishlist button logic
+  document.querySelector('#wishlistTable tbody').addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-btn')) {
+      const index = e.target.getAttribute('data-index');
+      let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      wishlist.splice(index, 1);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      loadWishlist();
+    }
+  });
+
+  loadWishlist();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Payment Methods - Pehnava Tales</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fff8f0; color:#5a3d2b; margin:0; padding:20px; }
+  h2 { color:#c55e35; text-align:center; margin-bottom: 20px; }
+  .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 3px 8px rgba(197,94,53,0.3);}
+  label { font-weight: 600; display:block; margin-top: 15px; }
+  input { width: 100%; padding: 8px; margin-top: 6px; border-radius: 5px; border:1px solid #c9b6a3; }
+  button { background:#c55e35; color:white; border:none; padding: 10px 20px; margin-top: 20px; cursor: pointer; border-radius: 5px; font-weight: 600; }
+  button:hover { background:#a35224; }
+  .saved-methods { margin-top: 20px; }
+  .method-card { background: #f8f0e3; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Your Payment Methods</h2>
+
+  <div class="saved-methods">
+    <div class="method-card">
+      <strong>Visa ending in 1234</strong><br />
+      Expiry: 12/2026
+      <button style="float:right;">Remove</button>
+    </div>
+    <div class="method-card">
+      <strong>MasterCard ending in 5678</strong><br />
+      Expiry: 06/2025
+      <button style="float:right;">Remove</button>
+    </div>
+  </div>
+
+  <form id="addPaymentForm">
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" id="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required maxlength="19" />
+    <label for="expiryDate">Expiry Date:</label>
+    <input type="month" id="expiryDate" required />
+    <label for="cvv">CVV:</label>
+    <input type="password" id="cvv" placeholder="***" required maxlength="3" />
+    <button type="submit">Add Payment Method</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('addPaymentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Add payment method functionality will be implemented.');
+  });
+</script>
+
+</body>
+</html>
+
+
+

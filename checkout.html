@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout - Pehnava Tales</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+    margin: 0; padding: 0;
+  }
+  header {
+    background: #f8f0e3;
+    padding: 10px 20px;
+    border-bottom: 1px solid #d3bfa7;
+    display:flex; align-items:center;
+  }
+  .logo { font-size:24px; font-weight:700; color:#c55e35; cursor:pointer; }
+  .container {
+    max-width:900px; margin:30px auto; padding:20px;
+    background:white; border-radius:10px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+  }
+  h2 { color:#c55e35; text-align:center; margin-bottom:18px; }
+  form { display:flex; flex-wrap:wrap; gap:16px; }
+  .form-group { flex:1 1 45%; display:flex; flex-direction:column; }
+  .form-group.full { flex:1 1 100%; }
+  label { font-weight:600; margin-bottom:6px; }
+  input, select, textarea {
+    padding:8px; font-size:14px; border-radius:5px; border:1px solid #c9b6a3;
+  }
+  textarea { resize:vertical; }
+  .order-summary { margin-top:20px; border-top:1px solid #d3bfa7; padding-top:16px; flex:1 1 100%; }
+  .order-summary h3 { color:#a35224; margin-bottom:12px; }
+  .order-items { max-height:220px; overflow-y:auto; margin-bottom:12px; }
+  .order-item { display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600; }
+  .order-item .item-name { flex:1; text-align:left; }
+  .order-item .item-qty { width:60px; text-align:center; }
+  .order-item .item-price { width:110px; text-align:right; }
+  .shipping-charge { font-weight:600; margin-bottom:8px; text-align:right; }
+  .total { font-size:18px; font-weight:700; color:#c55e35; text-align:right; }
+  button.proceed {
+    background:#c55e35; color:white; border:none; padding:12px; width:100%;
+    border-radius:6px; font-weight:700; font-size:16px; cursor:pointer; margin-top:18px;
+  }
+  button.proceed:hover { background:#a35224; }
+  p.empty { text-align:center; font-weight:600; color:#a35224; padding:20px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">Pehnava Tales</div>
+</header>
+
+<div class="container">
+  <h2>Checkout</h2>
+
+  <form id="checkoutForm">
+    <div class="form-group full">
+      <label for="address1">Address Line 1 *</label>
+      <input id="address1" name="address1" required placeholder="House no, street, nearby landmark" />
+    </div>
+
+    <div class="form-group full">
+      <label for="address2">Address Line 2 (optional)</label>
+      <input id="address2" name="address2" placeholder="Apartment, floor, building name etc." />
+    </div>
+
+    <div class="form-group">
+      <label for="city">City *</label>
+      <input id="city" name="city" required />
+    </div>
+
+    <div class="form-group">
+      <label for="state">State *</label>
+      <select id="state" name="state" required>
+        <option value="">Select State</option>
+        <option>Delhi</option><option>Maharashtra</option><option>Karnataka</option>
+        <option>Tamil Nadu</option><option>Uttar Pradesh</option><option>West Bengal</option>
+        <!-- add rest if needed -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="pincode">Pincode *</label>
+      <input id="pincode" name="pincode" required pattern="[0-9]{6}" placeholder="6-digit PIN" />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Full Name *</label>
+      <input id="name" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input id="email" name="email" type="email" required />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number *</label>
+      <input id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number" />
+    </div>
+
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <div class="order-items" id="orderItems">
+        <!-- items here -->
+      </div>
+
+      <div class="shipping-charge">Shipping Charge: ₹50</div>
+      <div class="total" id="orderTotal">Total: ₹0</div>
+    </div>
+
+    <button type="submit" class="proceed">Proceed to Payment</button>
+  </form>
+</div>
+
+<script>
+  // Load cart and render summary in the same visual format (name-left, qty-center, price-right)
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const orderItemsDiv = document.getElementById('orderItems');
+  const orderTotalDiv = document.getElementById('orderTotal');
+
+  function renderOrderItems() {
+    orderItemsDiv.innerHTML = '';
+    let subtotal = 0;
+
+    if (cart.length === 0) {
+      orderItemsDiv.innerHTML = '<p class="empty">Your cart is empty.</p>';
+      orderTotalDiv.textContent = 'Total: ₹0';
+      return;
+    }
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      subtotal += itemTotal;
+
+      const div = document.createElement('div');
+      div.className = 'order-item';
+      div.innerHTML = `
+        <div class="item-name">${item.name} (Size: ${item.size})</div>
+        <div class="item-qty">x${item.quantity}</div>
+        <div class="item-price">₹${itemTotal}</div>
+      `;
+      orderItemsDiv.appendChild(div);
+    });
+
+    const total = subtotal + 50; // shipping
+    orderTotalDiv.textContent = `Total: ₹${total}`;
+  }
+
+  renderOrderItems();
+
+  // On submit: validate & save checkoutData + paymentAmount then redirect to payment.html
+  document.getElementById('checkoutForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if (cart.length === 0) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    // simple validations
+    const pincode = this.pincode.value.trim();
+    const phone = this.phone.value.trim();
+
+    if (!/^\d{6}$/.test(pincode)) {
+      alert('Enter valid 6-digit pincode.');
+      this.pincode.focus();
+      return;
+    }
+    if (!/^\d{10}$/.test(phone)) {
+      alert('Enter valid 10-digit phone number.');
+      this.phone.focus();
+      return;
+    }
+
+    // calculate subtotal
+    let subtotal = 0;
+    cart.forEach(i => subtotal += i.price * i.quantity);
+    const shipping = 50;
+    const paymentAmount = subtotal + shipping;
+
+    // save address & amount
+    const checkoutData = {
+      address1: this.address1.value.trim(),
+      address2: this.address2.value.trim(),
+      city: this.city.value.trim(),
+      state: this.state.value,
+      pincode,
+      name: this.name.value.trim(),
+      email: this.email.value.trim(),
+      phone
+    };
+    localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+    localStorage.setItem('paymentAmount', String(paymentAmount));
+
+    // redirect to payment
+    window.location.href = 'payment.html';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Product Details - Pehnava Tales</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+    margin: 0; padding: 0;
+  }
+  header {
+    background: #f8f0e3;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d3bfa7;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c55e35;
+    cursor: pointer;
+  }
+  nav ul {
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    gap: 25px;
+  }
+  nav ul li a {
+    text-decoration:none;
+    color:#5a3d2b;
+    font-weight:600;
+  }
+  nav ul li a:hover {
+    color:#a35224;
+  }
+
+  /* Cart icon with count */
+  .cart-icon {
+    position: relative;
+    cursor: pointer;
+    font-weight: 700;
+    color: #5a3d2b;
+  }
+  .cart-icon:hover {
+    color: #a35224;
+  }
+  #cartCount {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: #c55e35;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }
+
+  .product-detail-container {
+    max-width: 900px;
+    margin: 30px auto 60px;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .product-images {
+    flex: 1 1 350px;
+  }
+  .product-images img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .product-info {
+    flex: 1 1 450px;
+  }
+  .product-info h1 {
+    color: #c55e35;
+    margin-bottom: 20px;
+  }
+  .product-info p {
+    line-height: 1.5;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .price {
+    font-size: 22px;
+    color: #a35224;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  label {
+    font-weight: 600;
+  }
+  select, input[type=number] {
+    padding: 8px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #c9b6a3;
+    width: 100%;
+  }
+  button {
+    background: #c55e35;
+    border: none;
+    padding: 12px;
+    color: white;
+    font-weight: 700;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  button:hover {
+    background: #a35224;
+  }
+
+  /* Recommendations */
+  .recommendations {
+    max-width: 900px;
+    margin: 0 auto 60px;
+  }
+  .recommendations h2 {
+    color: #c55e35;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 20px;
+  }
+  .rec-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .rec-card:hover {
+    transform: scale(1.05);
+  }
+  .rec-card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .rec-name {
+    font-weight: 700;
+    margin: 10px 0 5px;
+    color: #5a3d2b;
+  }
+  .rec-price {
+    color: #a35224;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="window.location.href='index.html'">Pehnava Tales</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
+  <div class="cart-icon" onclick="window.location.href='cart.html'">
+    🛒 Cart <span id="cartCount">0</span>
+  </div>
+</header>
+
+<div class="product-detail-container" id="productDetail">
+  <!-- Product details will load here -->
+</div>
+
+<div class="recommendations">
+  <h2>You may also like</h2>
+  <div class="rec-grid" id="recommendationsGrid">
+    <!-- Recommended products here -->
+  </div>
+</div>
+
+<script>
+  // Product data same as shop page
+  const products = [
+    {
+      id: 1,
+      name: "Red Lehenga",
+      category: "Lehenga",
+      sizes: ["S", "M", "L"],
+      price: 2599,
+      description: "Beautiful traditional red lehenga with intricate embroidery perfect for weddings and special occasions.",
+      images: [
+        "https://images.unsplash.com/photo-1555529669-24773a5a6a7b?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1542068829-1115f7259450?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1546484959-f4221e62a34a?auto=format&fit=crop&w=600&q=80"
+      ]
+    },
+    {
+      id: 2,
+      name: "Blue Kurti",
+      category: "Kurti",
+      sizes: ["M", "L", "XL"],
+      price: 799,
+      description: "Elegant blue kurti made from soft fabric for daily wear and festive occasions.",
+      images: [
+        "https://images.unsplash.com/photo-1562157874-eab1d8ae792d?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80"
+      ]
+    },
+    {
+      id: 3,
+      name: "Elegant Saree",
+      category: "Saree",
+      sizes: ["S", "M", "L", "XL"],
+      price: 1999,
+      description: "Graceful saree with pastel colors and delicate prints for a classy look.",
+      images: [
+        "https://images.unsplash.com/photo-1496317556649-f930d733eea2?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=600&q=80"
+      ]
+    },
+    {
+      id: 4,
+      name: "Green Gown",
+      category: "Gown",
+      sizes: ["M", "L"],
+      price: 2999,
+      description: "Stylish green gown with elegant drapes perfect for parties and special events.",
+      images: [
+        "https://images.unsplash.com/photo-1491368906089-4554e269a9b3?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=600&q=80"
+      ]
+    },
+    {
+      id: 5,
+      name: "Yellow Kurti",
+      category: "Kurti",
+      sizes: ["S", "M"],
+      price: 699,
+      description: "Bright yellow kurti perfect for casual outings and gatherings.",
+      images: [
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80"
+      ]
+    }
+  ];
+
+  // Get product ID from URL param
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = Number(urlParams.get("id"));
+  const product = products.find(p => p.id === productId);
+
+  const container = document.getElementById("productDetail");
+
+  if (!product) {
+    container.innerHTML = "<p>Product not found.</p>";
+  } else {
+    container.innerHTML = `
+      <div class="product-images">
+        ${product.images.map(img => `<img src="${img}" alt="${product.name}">`).join('')}
+      </div>
+      <div class="product-info">
+        <h1>${product.name}</h1>
+        <p class="price">₹${product.price}</p>
+        <p>${product.description}</p>
+        <label for="sizeSelect">Select Size</label>
+        <select id="sizeSelect">
+          ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+        </select>
+        <label for="qtyInput">Quantity</label>
+        <input type="number" id="qtyInput" value="1" min="1" />
+        <button id="addToCartBtn">Add to Cart</button>
+        <button id="wishlistBtn" style="margin-top:10px; background:#a35224;">Add to Wishlist</button>
+        <p id="actionMsg" style="margin-top:15px; font-weight:600; color:#c55e35;"></p>
+      </div>
+    `;
+  }
+
+  // Update cart count in header
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById('cartCount').textContent = count;
+  }
+
+  // Event listeners for Add to Cart and Wishlist buttons
+  document.addEventListener("click", function(e) {
+    if (e.target && e.target.id === "addToCartBtn") {
+      // Agar button pehle se "View in Cart" hai toh cart page open karo
+      if (e.target.textContent === "View in Cart") {
+        window.location.href = "cart.html";
+        return;
+      }
+
+      const size = document.getElementById("sizeSelect").value;
+      const qty = Number(document.getElementById("qtyInput").value);
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const existingIndex = cart.findIndex(item => item.id === product.id && item.size === size);
+      if(existingIndex > -1) {
+        cart[existingIndex].quantity += qty;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          size: size,
+          quantity: qty,
+          price: product.price,
+          image: product.images[0]
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      document.getElementById("actionMsg").textContent = `Added ${qty} x ${product.name} (Size: ${size}) to cart. View in cart.`;
+      e.target.textContent = "View in Cart";
+      e.target.style.background = "#4caf50";
+      updateCartCount();
+    }
+
+    if (e.target && e.target.id === "wishlistBtn") {
+      document.getElementById("actionMsg").textContent = `${product.name} added to wishlist.`;
+      e.target.style.background = "#c55e35";
+      // Wishlist logic can be implemented similarly
+    }
+  });
+
+  // Init cart count on page load
+  updateCartCount();
+
+  // Show recommendations (other products)
+  const recGrid = document.getElementById("recommendationsGrid");
+  const recommendations = products.filter(p => p.id !== productId).slice(0, 4);
+  recommendations.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "rec-card";
+    card.innerHTML = `
+      <img src="${p.images[0]}" alt="${p.name}">
+      <div class="rec-name">${p.name}</div>
+      <div class="rec-price">₹${p.price}</div>
+    `;
+    card.onclick = () => {
+      window.location.href = `product.html?id=${p.id}`;
+    };
+    recGrid.appendChild(card);
+  });
+
+</script>
+
+</body>
+</html>

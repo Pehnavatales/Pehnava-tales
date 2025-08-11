@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Returns & Refunds - Pehnava Tales</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#fff8f0; color:#5a3d2b; margin:0; padding:20px; }
+  h2 { color:#c55e35; text-align:center; margin-bottom: 20px; }
+  .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 3px 8px rgba(197,94,53,0.3);}
+  label { font-weight: 600; display:block; margin-top: 15px; }
+  input, textarea, select { width: 100%; padding: 8px; margin-top: 6px; border-radius: 5px; border:1px solid #c9b6a3; }
+  button { background:#c55e35; color:white; border:none; padding: 10px 20px; margin-top: 20px; cursor: pointer; border-radius: 5px; font-weight: 600; }
+  button:hover { background:#a35224; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Return / Refund Request</h2>
+  <form id="returnsForm">
+    <label for="orderId">Order ID:</label>
+    <input type="text" id="orderId" placeholder="Enter your order ID" required />
+    <label for="reason">Reason for Return:</label>
+    <select id="reason" required>
+      <option value="">Select a reason</option>
+      <option value="defective">Defective Item</option>
+      <option value="wrong-item">Wrong Item Sent</option>
+      <option value="size-issue">Size Issue</option>
+      <option value="changed-mind">Changed Mind</option>
+    </select>
+    <label for="details">Additional Details:</label>
+    <textarea id="details" rows="4" placeholder="Describe your request" required></textarea>
+    <button type="submit">Submit Request</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('returnsForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Return request submitted (functionality to be implemented).');
+  });
+</script>
+
+</body>
+</html>

@@ -1,38 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Pehnava Tales</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact Us - Pehnava Tales</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+    margin: 0; padding: 0;
+  }
+  header {
+    background: #f8f0e3;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d3bfa7;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c55e35;
+    cursor: pointer;
+  }
+  nav ul {
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    gap: 25px;
+  }
+  nav ul li a {
+    text-decoration:none;
+    color:#5a3d2b;
+    font-weight:600;
+  }
+  nav ul li a.active,
+  nav ul li a:hover {
+    color:#a35224;
+    font-weight: bold;
+  }
+  .contact-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+  }
+  h1 {
+    color: #c55e35;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  label {
+    font-weight: 600;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #c9b6a3;
+    font-size: 16px;
+    resize: vertical;
+  }
+  button {
+    background: #c55e35;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  button:hover {
+    background: #a35224;
+  }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Pehnava Tales</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="shop.html">Shop</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+  <div class="logo" onclick="window.location.href='index.html'">Pehnava Tales</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
 </header>
 
-<section>
-    <h2>Get in Touch</h2>
-    <p>We’d love to hear from you! Whether it's about a custom order or general inquiries, feel free to reach out.</p>
-    <p>📸 Instagram: <a href="#">@pehnava_tales</a></p>
-    <p>💬 WhatsApp: <a href="#">+91 9729744923</a></p>
-    <p>📧 Email: <a href="mailto:pehnava@example.com">pehnavatales.help@gmail.com</a></p>
-</section>
+<div class="contact-container">
+  <h1>Contact Us</h1>
+  <p><strong>Phone:</strong> 9034414835 / 9729744923</p>
+  <p><strong>Email:</strong> <a href="mailto:pehnavatales.help@gmail.com">pehnavatales.help@gmail.com</a></p>
+  <form onsubmit="handleSubmit(event)">
+    <label for="name">Name</label>
+    <input id="name" type="text" placeholder="Your Name" required />
+    
+    <label for="email">Email</label>
+    <input id="email" type="email" placeholder="you@example.com" required />
+    
+    <label for="message">Message</label>
+    <textarea id="message" rows="5" placeholder="Your message here" required></textarea>
+    
+    <button type="submit">Send Message</button>
+  </form>
+</div>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert("Thank you for contacting Pehnava Tales! We will get back to you soon.");
+    e.target.reset();
+  }
+</script>
 
 <footer>
-    <p>Follow us on:
-        <a href="#">Instagram</a> |
-        <a href="#">WhatsApp</a> |
-        <a href="#">Email</a>
-    </p>
-    <p>&copy; 2025 Pehnava Tales</p>
+  Contact us: 9034414835 / 9729744923 | Email: <a href="mailto:pehnavatales.help@gmail.com">pehnavatales.help@gmail.com</a> | Follow us on <a href="#">Instagram</a>, <a href="#">Facebook</a>
 </footer>
 
 </body>

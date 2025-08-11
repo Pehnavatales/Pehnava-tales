@@ -1,59 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pehnava Tales</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pehnava Tales - Home</title>
+<style>
+  :root{
+    --bg:#fff8f0; --text:#5a3d2b; --brand:#c55e35; --accent:#a35224; --muted:#d3bfa7;
+  }
+  body{margin:0;font-family:'Segoe UI',Tahoma, Geneva, Verdana,sans-serif;background:var(--bg);color:var(--text);}
+  header{background:#f8f0e3;padding:10px 20px;display:flex;align-items:center;gap:18px;justify-content:space-between;border-bottom:1px solid var(--muted);position:sticky;top:0;z-index:1000}
+  .left, .center, .right{display:flex;align-items:center;gap:16px}
+  .logo{font-weight:800;color:var(--brand);font-size:22px;cursor:pointer}
+  nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+  nav a{text-decoration:none;color:var(--text);font-weight:600}
+  nav a:hover{color:var(--accent)}
+  /* search */
+  .search-bar{display:flex;border:1px solid #c9b6a3;border-radius:6px;overflow:hidden;background:white}
+  .search-bar input{border:0;padding:7px 10px;width:220px;outline:none}
+  .search-bar button{background:var(--brand);color:#fff;border:0;padding:7px 12px;cursor:pointer}
+  .search-bar button:hover{background:var(--accent)}
+  /* icons */
+  .icons{display:flex;gap:12px;align-items:center;position:relative}
+  .icon-btn{position:relative;cursor:pointer;font-weight:700;padding:6px 8px;border-radius:6px;background:transparent;border:0}
+  .badge{position:absolute;top:-6px;right:-6px;background:var(--brand);color:#fff;font-size:12px;padding:3px 7px;border-radius:50%}
+  /* account dropdown */
+  .my-account{position:relative}
+  #accountDropdown{display:none;position:absolute;right:0;top:36px;background:white;border:1px solid var(--muted);box-shadow:0 4px 12px rgba(0,0,0,0.08);min-width:200px;border-radius:6px;z-index:1100}
+  #accountDropdown a{display:block;padding:10px 12px;color:var(--text);text-decoration:none;font-weight:600;border-bottom:1px solid #f0e9df}
+  #accountDropdown a:last-child{border-bottom:0;color:var(--accent);font-weight:700}
+  #accountDropdown a:hover{background:#f8f0e3;color:var(--accent)}
+  /* hero slider */
+  .hero-wrap{max-width:1100px;margin:20px auto;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(197,94,53,0.15)}
+  .slides{display:flex;transition:transform .5s ease}
+  .slide{min-width:100%;position:relative;cursor:pointer}
+  .slide img{display:block;width:100%;height:430px;object-fit:cover}
+  .slide-text{position:absolute;left:30px;bottom:28px;background:rgba(197,94,53,0.85);color:#fff;padding:14px 20px;border-radius:8px;font-weight:800;font-size:20px}
+  .slider-controls{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);display:flex;justify-content:space-between;padding:0 12px;pointer-events:none}
+  .ctrl-btn{background:rgba(0,0,0,0.35);color:white;border:0;padding:8px 10px;border-radius:6px;cursor:pointer;pointer-events:auto}
+  .dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.6);cursor:pointer}
+  .dot.active{background:var(--brand)}
+  /* sections */
+  .container{max-width:1100px;margin:40px auto;padding:0 18px}
+  h2.section-title{text-align:center;color:var(--brand);font-size:26px;margin-bottom:18px}
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .card{background:white;border-radius:10px;padding:12px;box-shadow:0 4px 12px rgba(197,94,53,0.12);cursor:pointer;text-align:center}
+  .card img{width:100%;height:220px;object-fit:cover;border-radius:8px}
+  .card .name{font-weight:700;margin:10px 0 6px;color:var(--text)}
+  .card .price{color:var(--accent);font-weight:700}
+  .view-all{display:block;margin:18px auto 0;padding:10px 16px;background:var(--brand);color:#fff;text-align:center;border-radius:8px;text-decoration:none;max-width:200px;font-weight:700}
+  /* footer */
+  footer{background:#f8f0e3;padding:22px 18px;text-align:center;border-top:1px solid var(--muted);color:var(--text)}
+  footer a{color:var(--brand);text-decoration:none;font-weight:700}
+  /* responsive tweaks */
+  @media (max-width:880px){ .search-bar input{width:140px} .slide img{height:300px} }
+  @media (max-width:600px){ header{flex-wrap:wrap;padding:12px} nav{order:3;width:100%;} .left{width:100%;justify-content:space-between} .search-bar{order:2;width:100%;margin-top:8px} }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Pehnava Tales</h1>
+  <div class="left">
+    <div class="logo" onclick="location.href='index.html'">Pehnava Tales</div>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="shop.html">Shop</a>
-        <a href="contact.html">Contact</a>
+      <ul>
+        <li><a href="index.html" style="font-weight:700;color:var(--accent)">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="offers.html">Offers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
     </nav>
+  </div>
+
+  <div class="center">
+    <div class="search-bar" role="search" onsubmit="return false;">
+      <input id="searchInput" placeholder="Search products..." />
+      <button id="searchBtn" title="Search">🔍</button>
+    </div>
+  </div>
+
+  <div class="right icons header-right">
+    <div class="icon-btn" title="Wishlist" onclick="location.href='wishlist.html'">
+      ❤️ Wishlist <span id="wishBadge" class="badge" style="display:none">0</span>
+    </div>
+    <div class="icon-btn" title="Cart" onclick="location.href='cart.html'">
+      🛒 Cart <span id="cartBadge" class="badge" style="display:none">0</span>
+    </div>
+    <div class="my-account">
+      <button id="accountBtn">My Account ▼</button>
+      <div id="accountDropdown" class="account-dropdown" aria-hidden="true">
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="profile.html">Profile Details</a>
+        <a href="orders.html">Order History</a>
+        <a href="change-password.html">Change Password</a>
+        <a href="payment-methods.html">Payment Methods</a>
+        <a href="support.html">Support / Help</a>
+        <a href="returns.html">Returns / Refund Requests</a>
+        <a href="logout.html">Logout</a>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class="hero">
-    <h2>Welcome to Pehnava Tales</h2>
-    <p>A modern & traditional touch for every woman</p>
+<!-- Hero / Big Banner (clickable) -->
+<div class="hero-wrap">
+  <div class="hero-wrap-inner hero-wrap--overflow">
+    <div class="slides" id="slides">
+      <div class="slide" data-offer="short-kurti" onclick="location.href='shop.html?offer=short-kurti'">
+        <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1400&q=80" alt="Any 3 Short Kurtis – ₹999" />
+        <div class="slide-text">Any 3 Short Kurtis – ₹999</div>
+      </div>
+      <div class="slide" data-offer="long-kurti" onclick="location.href='shop.html?offer=long-kurti'">
+        <img src="https://images.unsplash.com/photo-1520975912095-f0b07e786e19?auto=format&fit=crop&w=1400&q=80" alt="Any 2 Long Kurtis – ₹1199" />
+        <div class="slide-text">Any 2 Long Kurtis – ₹1199</div>
+      </div>
+      <div class="slide" data-offer="15percent" onclick="location.href='shop.html?offer=15percent'">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80" alt="15% off on every purchase" />
+        <div class="slide-text">15% off on every purchase</div>
+      </div>
+    </div>
+
+    <div class="slider-controls">
+      <button class="ctrl-btn" id="prevBtn" aria-label="Previous">◀</button>
+      <button class="ctrl-btn" id="nextBtn" aria-label="Next">▶</button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </div>
 </div>
 
-<section>
-    <h2>About Us</h2>
-    <p>Pehnava Tales is an online women’s clothing store blending elegance and tradition with modern style. Every piece tells a story, designed for the modern woman who values heritage.</p>
-</section>
-
-<section>
-    <h2>Featured Collection</h2>
-    <div class="products">
-        <div class="product-card">
-            <img src="images/dress1.jpg" alt="Dress 1">
-            <h3>Elegant Saree</h3>
-        </div>
-        <div class="product-card">
-            <img src="images/dress2.jpg" alt="Dress 2">
-            <h3>Festive Kurti</h3>
-        </div>
-        <div class="product-card">
-            <img src="images/dress3.jpg" alt="Dress 3">
-            <h3>Modern Lehenga</h3>
-        </div>
+<!-- Collections -->
+<div class="container collections-section">
+  <h2 class="section-title">Our Collections</h2>
+  <div class="grid categories">
+    <div class="card" onclick="location.href='shop.html?category=lehenga'">
+      <img src="https://images.unsplash.com/photo-1555529669-24773a5a6a7b?auto=format&fit=crop&w=800&q=80" alt="Lehenga">
+      <div class="name">Lehenga</div>
+      <div class="price">Starting ₹2599</div>
     </div>
-</section>
+    <div class="card" onclick="location.href='shop.html?category=sarees'">
+      <img src="https://images.unsplash.com/photo-1491368906089-4554e269a9b3?auto=format&fit=crop&w=800&q=80" alt="Sarees">
+      <div class="name">Sarees</div>
+      <div class="price">Starting ₹999</div>
+    </div>
+    <div class="card" onclick="location.href='shop.html?category=kurtis'">
+      <img src="https://images.unsplash.com/photo-1562157874-eab1d8ae792d?auto=format&fit=crop&w=800&q=80" alt="Kurtis">
+      <div class="name">Kurtis</div>
+      <div class="price">Starting ₹799</div>
+    </div>
+    <div class="card" onclick="location.href='shop.html?category=gowns'">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="Gowns">
+      <div class="name">Gowns</div>
+      <div class="price">Starting ₹1499</div>
+    </div>
+  </div>
+</div>
+
+<!-- Best Sellers -->
+<div class="container best-sellers">
+  <h2 class="section-title">Our Best Sellers</h2>
+  <div class="grid featured-products">
+    <div class="card" onclick="location.href='product.html?id=1'">
+      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80" alt="Short Kurti">
+      <div class="name">Short Kurti</div>
+      <div class="price">₹999</div>
+    </div>
+    <div class="card" onclick="location.href='product.html?id=2'">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80" alt="Lehenga">
+      <div class="name">Lehenga</div>
+      <div class="price">₹2599</div>
+    </div>
+    <div class="card" onclick="location.href='product.html?id=3'">
+      <img src="https://images.unsplash.com/photo-1491368906089-4554e269a9b3?auto=format&fit=crop&w=800&q=80" alt="Co-ord Set">
+      <div class="name">Co-ord Set</div>
+      <div class="price">₹1299</div>
+    </div>
+  </div>
+  <a class="view-all" href="shop.html">View All Products</a>
+</div>
 
 <footer>
-    <p>Follow us on:
-        <a href="#">Instagram</a> |
-        <a href="#">WhatsApp</a> |
-        <a href="#">Email</a>
-    </p>
-    <p>&copy; 2025 Pehnava Tales</p>
+  <div>Address: 123 Fashion Street, Gurgaon, Haryana, India</div>
+  <div>Phone: 9034414835 / 9729744923 | Email: <a href="mailto:pehnavatales.help@gmail.com">pehnavatales.help@gmail.com</a></div>
+  <div style="margin-top:8px">&copy; 2025 Pehnava Tales</div>
 </footer>
+
+<script>
+  // Slider: auto + manual + dots
+  const slidesEl = document.getElementById('slides');
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  let current = 0, timer=null;
+
+  function createDots(){
+    slides.forEach((_,i)=>{
+      const d = document.createElement('div');
+      d.className='dot'+(i===0? ' active':'');
+      d.dataset.index = i;
+      d.addEventListener('click', ()=> goTo(i));
+      dotsEl.appendChild(d);
+    });
+  }
+
+  function goTo(i){
+    current = i;
+    slidesEl.style.transform = `translateX(-${i*100}%)`;
+    updateDots();
+    resetTimer();
+  }
+
+  function prev(){ goTo((current-1+slides.length)%slides.length) }
+  function next(){ goTo((current+1)%slides.length) }
+
+  function updateDots(){
+    document.querySelectorAll('.dot').forEach((d,idx)=> d.classList.toggle('active', idx===current));
+  }
+
+  function resetTimer(){
+    if(timer) clearInterval(timer);
+    timer = setInterval(()=> next(),4500);
+  }
+
+  createDots();
+  resetTimer();
+  document.getElementById('prevBtn').addEventListener('click', prev);
+  document.getElementById('nextBtn').addEventListener('click', next);
+
+  // Account dropdown
+  const accountBtn = document.getElementById('accountBtn');
+  const accountDropdown = document.getElementById('accountDropdown');
+  accountBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    accountDropdown.style.display = accountDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+  window.addEventListener('click', (e)=>{
+    if(!accountDropdown.contains(e.target) && e.target !== accountBtn) accountDropdown.style.display='none';
+  });
+
+  // Search redirects to shop.html?search=...
+  document.getElementById('searchBtn').addEventListener('click', ()=>{
+    const q = document.getElementById('searchInput').value.trim();
+    if(q) location.href = `shop.html?search=${encodeURIComponent(q)}`;
+  });
+  document.getElementById('searchInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('searchBtn').click(); } });
+
+  // Cart & Wishlist badges (sample: from localStorage or default)
+  function updateBadges(){
+    const cartCount = Number(localStorage.getItem('cartCount')||0);
+    const wishCount = Number(localStorage.getItem('wishCount')||0);
+    const cartBadge = document.getElementById('cartBadge');
+    const wishBadge = document.getElementById('wishBadge');
+    if(cartCount>0){ cartBadge.style.display='inline-block'; cartBadge.textContent = cartCount; } else cartBadge.style.display='none';
+    if(wishCount>0){ wishBadge.style.display='inline-block'; wishBadge.textContent = wishCount; } else wishBadge.style.display='none';
+  }
+  // For demo, set sample counts if none exist
+  if(!localStorage.getItem('cartCount')) localStorage.setItem('cartCount', 2);
+  if(!localStorage.getItem('wishCount')) localStorage.setItem('wishCount', 1);
+  updateBadges();
+</script>
 
 </body>
 </html>

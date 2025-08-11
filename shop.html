@@ -1,49 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Pehnava Tales</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pehnava Tales - Shop</title>
+<style>
+  body {
+    margin:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff8f0;
+    color: #5a3d2b;
+  }
+  header {
+    background: #f8f0e3;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d3bfa7;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #c55e35;
+    cursor: pointer;
+  }
+  nav ul {
+    list-style:none;
+    margin:0; padding:0;
+    display:flex;
+    gap: 25px;
+  }
+  nav ul li a {
+    text-decoration:none;
+    color:#5a3d2b;
+    font-weight:600;
+    font-size: 16px;
+  }
+  nav ul li a:hover, nav ul li a.active {
+    color:#a35224;
+    font-weight: 700;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .search-bar {
+    display: flex;
+    border: 1px solid #c9b6a3;
+    border-radius: 5px;
+    overflow: hidden;
+    background: white;
+  }
+  .search-bar input {
+    border: none;
+    padding: 6px 10px;
+    font-size: 14px;
+    width: 180px;
+    outline: none;
+  }
+  .search-bar button {
+    background: #c55e35;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .search-bar button:hover {
+    background: #a35224;
+  }
+  .my-account {
+    position: relative;
+    user-select: none;
+  }
+  #accountBtn {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    color: #5a3d2b;
+    padding: 6px 10px;
+  }
+  #accountBtn:hover {
+    color: #a35224;
+  }
+  .account-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    border: 1px solid #c9b6a3;
+    border-radius: 5px;
+    margin-top: 5px;
+    min-width: 180px;
+    box-shadow: 0 3px 8px rgba(197, 94, 53, 0.3);
+    z-index: 10;
+  }
+  .account-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: #5a3d2b;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid #f0e9df;
+  }
+  .account-dropdown a:hover {
+    background: #f8f0e3;
+    color: #a35224;
+  }
+  .account-dropdown a:last-child {
+    border-bottom: none;
+    color: #a35224;
+    font-weight: 700;
+  }
+  /* Main Content */
+  .main-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    display: flex;
+    gap: 25px;
+    padding: 0 20px;
+  }
+  /* Filters Sidebar */
+  .filters {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.3);
+    height: fit-content;
+    position: sticky;
+    top: 80px;
+  }
+  .filters h3 {
+    color: #c55e35;
+    margin-bottom: 15px;
+  }
+  .filters label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .filters select, .filters input[type="range"], .filters input[type="checkbox"] {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  .filters .checkbox-group label {
+    font-weight: normal;
+    margin-left: 5px;
+    display: inline;
+  }
+  /* Products Grid */
+  .products-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 25px;
+  }
+  .product-card {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 3px 8px rgb(197 94 53 / 0.2);
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  .product-card img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 220px;
+  }
+  .product-name {
+    font-weight: 700;
+    margin: 10px 0 5px;
+    color: #5a3d2b;
+  }
+  .product-price {
+    color: #a35224;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Pehnava Tales</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="shop.html">Shop</a>
-        <a href="contact.html">Contact</a>
-    </nav>
+  <div class="logo" onclick="window.location.href='index.html'">Pehnava Tales</div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="offers.html">Offers</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+      <button onclick="filterProducts()">🔍</button>
+    </div>
+
+    <div class="my-account">
+      <button id="accountBtn">My Account ▼</button>
+      <div class="account-dropdown" id="accountDropdown">
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="profile.html">Profile Details</a>
+        <a href="orders.html">Order History</a>
+        <a href="change-password.html">Change Password</a>
+        <a href="payment-methods.html">Payment Methods</a>
+        <a href="support.html">Support / Help</a>
+        <a href="returns.html">Returns / Refund Requests</a>
+        <a href="logout.html">Logout</a>
+      </div>
+    </div>
+  </div>
 </header>
 
-<section>
-    <h2>Our Collection</h2>
-    <div class="products">
-        <div class="product-card">
-            <img src="images/dress1.jpg" alt="Saree">
-            <h3>Elegant Saree</h3>
-        </div>
-        <div class="product-card">
-            <img src="images/dress2.jpg" alt="Kurti">
-            <h3>Festive Kurti</h3>
-        </div>
-        <div class="product-card">
-            <img src="images/dress3.jpg" alt="Lehenga">
-            <h3>Modern Lehenga</h3>
-        </div>
-    </div>
-</section>
+<div class="main-container">
+  <aside class="filters">
+    <h3>Filters</h3>
+    <label for="categoryFilter">Category</label>
+    <select id="categoryFilter" onchange="filterProducts()">
+      <option value="all">All</option>
+      <option value="lehenga">Lehenga</option>
+      <option value="kurtis">Kurtis</option>
+      <option value="co-ord">Co-ord Sets</option>
+      <option value="sarees">Sarees</option>
+      <option value="anarkali">Anarkali Suits</option>
+      <option value="gowns">Gowns</option>
+      <option value="dresses">Dresses</option>
+    </select>
 
-<footer>
-    <p>Follow us on:
-        <a href="#">Instagram</a> |
-        <a href="#">WhatsApp</a> |
-        <a href="#">Email</a>
-    </p>
-    <p>&copy; 2025 Pehnava Tales</p>
-</footer>
+    <label for="sizeFilter">Size</label>
+    <select id="sizeFilter" onchange="filterProducts()">
+      <option value="all">All</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+    </select>
+
+    <label for="priceFilter">Max Price: <span id="priceValue">5000</span> ₹</label>
+    <input type="range" id="priceFilter" min="100" max="5000" value="5000" step="50" oninput="updatePriceValue(this.value); filterProducts()" />
+  </aside>
+
+  <section class="products-grid" id="productsGrid">
+    <!-- Products will be inserted here by JS -->
+  </section>
+</div>
+
+<script>
+  // Product Data
+  const products = [
+    {id:1, name:"Elegant Lehenga", category:"lehenga", price:2599, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1555529669-24773a5a6a7b?auto=format&fit=crop&w=400&q=80"},
+    {id:2, name:"Classic Kurti", category:"kurtis", price:799, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1562157874-eab1d8ae792d?auto=format&fit=crop&w=400&q=80"},
+    {id:3, name:"Co-ord Set - Floral", category:"co-ord", price:1299, sizes:["S","M","L"], image:"https://images.unsplash.com/photo-1496317556649-f930d733eea2?auto=format&fit=crop&w=400&q=80"},
+    {id:4, name:"Silk Saree", category:"sarees", price:1999, sizes:["M","L","XL"], image:"https://images.unsplash.com/photo-1491368906089-4554e269a9b3?auto=format&fit=crop&w=400&q=80"},
+    {id:5, name:"Anarkali Suit", category:"anarkali", price:1799, sizes:["S","M","L"], image:"https://images.unsplash.com/photo-1496412705862-e0088f16f791?auto=format&fit=crop&w=400&q=80"},
+    {id:6, name:"Evening Gown", category:"gowns", price:2499, sizes:["M","L","XL"], image:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"},
+    {id:7, name:"Casual Dress", category:"dresses", price:999, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"},
+    {id:8, name:"Designer Lehenga", category:"lehenga", price:2999, sizes:["S","M","L"], image:"https://images.unsplash.com/photo-1555529669-24773a5a6a7b?auto=format&fit=crop&w=400&q=80"},
+    {id:9, name:"Printed Kurti", category:"kurtis", price:899, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1562157874-eab1d8ae792d?auto=format&fit=crop&w=400&q=80"},
+    {id:10, name:"Elegant Co-ord Set", category:"co-ord", price:1399, sizes:["M","L","XL"], image:"https://images.unsplash.com/photo-1496317556649-f930d733eea2?auto=format&fit=crop&w=400&q=80"},
+    {id:11, name:"Festive Saree", category:"sarees", price:2599, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1491368906089-4554e269a9b3?auto=format&fit=crop&w=400&q=80"},
+    {id:12, name:"Royal Anarkali", category:"anarkali", price:2199, sizes:["M","L","XL"], image:"https://images.unsplash.com/photo-1496412705862-e0088f16f791?auto=format&fit=crop&w=400&q=80"},
+    {id:13, name:"Party Gown", category:"gowns", price:2799, sizes:["S","M","L","XL"], image:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"},
+    {id:14, name:"Summer Dress", category:"dresses", price:1099, sizes:["S","M","L"], image:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"},
+  ];
+
+  function updatePriceValue(val) {
+    document.getElementById('priceValue').innerText = val;
+  }
+
+  function filterProducts() {
+    const category = document.getElementById('categoryFilter').value;
+    const size = document.getElementById('sizeFilter').value;
+    const maxPrice = parseInt(document.getElementById('priceFilter').value);
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+
+    const filtered = products.filter(p => {
+      const matchesCategory = category === 'all' || p.category === category;
+      const matchesSize = size === 'all' || p.sizes.includes(size);
+      const matchesPrice = p.price <= maxPrice;
+      const matchesSearch = p.name.toLowerCase().includes(searchText);
+      return matchesCategory && matchesSize && matchesPrice && matchesSearch;
+    });
+
+    renderProducts(filtered);
+  }
+
+  function renderProducts(productList) {
+    const container = document.getElementById('productsGrid');
+    container.innerHTML = '';
+
+    if(productList.length === 0) {
+      container.innerHTML = '<p style="color:#a35224; font-weight:600; font-size:18px;">No products found.</p>';
+      return;
+    }
+
+    productList.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.onclick = () => {
+        window.location.href = `product.html?id=${p.id}`;
+      };
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" />
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">₹${p.price}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // Init
+  filterProducts();
+
+  // My Account dropdown toggle
+  document.getElementById('accountBtn').addEventListener('click', function() {
+    const dropdown = document.getElementById('accountDropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  window.addEventListener('click', function(e){
+    if (!document.getElementById('accountBtn').contains(e.target) &&
+        !document.getElementById('accountDropdown').contains(e.target)) {
+      document.getElementById('accountDropdown').style.display = 'none';
+    }
+  });
+</script>
 
 </body>
 </html>
